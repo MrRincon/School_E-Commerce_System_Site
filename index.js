@@ -134,7 +134,46 @@ let webstore = new Vue({
                 .slice(0, 3);
             return trendingLessons;
         },
-        
+        itemsInCart() {
+            let currItems = [];
+            let existentItems = [];
+            this.cart.forEach(item => {
+                if (!existentItems.includes(item)) {
+                    let itemData = {
+                        "img": {
+                            "location": "",
+                            "alt": ""
+                        },
+                        "price": 0.00,
+                        "subject": "",
+                        "location": "",
+                        "id": 0,
+                        "amount": 0
+                    };
+                    this.lessons.forEach(lesson => {
+                        if (item === lesson.id) {
+                            itemData.img.location = lesson.img.location;
+                            itemData.img.alt = lesson.img.alt;
+                            itemData.subject = lesson.subject;
+                            itemData.price = lesson.price;
+                            itemData.subject = lesson.subject;
+                            itemData.location = lesson.location;
+                            itemData.id = lesson.id;
+                            itemData.amount++;
+                        }
+                    });
+                    currItems.push(itemData);
+                    existentItems.push(item);
+                } else {
+                    currItems.forEach(itemIn => {
+                        if(item === itemIn.id){
+                            itemIn.amount++;
+                        }
+                    })
+                }
+            });
+            return currItems;
+        }
     },
     created: function () {
         fetch("http://localhost:3000/collections/lessons").then(
