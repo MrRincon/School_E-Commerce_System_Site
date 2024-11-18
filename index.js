@@ -2,17 +2,17 @@
 // Vue object with all the important functionality and information
 let webstore = new Vue({
     el: '#App',
-    data: {//Product information
+    data: {// Data information
         sitename: "SchoolFlex",
         displayPages: 0,
-        lessons: [],
+        lessons: [],// Array to store the lessons information
         sort: {
             by: 'Subject',
             order: 'Ascending',
             options: ['Subject', 'Location', 'Price', 'Spaces']
         },
-        cart: [],//Array to store items in the shopping cart [1001,1001,1001]
-        order: {
+        cart: [],// Array to store items in the shopping cart
+        order: {// Order information
             firstName: '',
             lastName: '',
             phoneNumber: '',
@@ -33,32 +33,29 @@ let webstore = new Vue({
             }
         }
     },
-    methods: {
-        displayPage(page) {
+    methods: {// Methods for the application
+        displayPage(page) {// Method to display an specific page
             this.displayPages = page;
         },
-        addToCart(lesson) {
-            this.cart.push(lesson.id);//Add item to cart 
+        addToCart(lesson) {// Method to add an item to the cart
+            this.cart.push(lesson.id); 
         },
-        canAddToCart(lesson) {
+        canAddToCart(lesson) {// Method to confirm if item can be added to the cart
             return lesson.available > this.cartCount(lesson.id);
         },
-        itemsLeft(lesson) {
+        itemsLeft(lesson) {// Method to display the items left
             return lesson.available - this.cartCount(lesson.id);
         },
-        cartCount(id) {
+        cartCount(id) {// Method to count the items with the same id in the cart 
             let count = 0;
-            for (let i = 0; i < this.cart.length; i++) {
-                if (this.cart[i] === id) {
+            for (let itemIndex = 0; itemIndex < this.cart.length; itemIndex++) {
+                if (this.cart[itemIndex] === id) {
                     count++;
                 }
             }
             return count;
         },
-        submitDeliveryDetails() {
-            alert('Order submitted!');
-        },
-        removeItem(id) {
+        removeItem(id) {// Method to remove an specific item from the cart
             let spotCount = 0;
             for ( let item of this.cart){
                 if(item === id){
@@ -68,22 +65,15 @@ let webstore = new Vue({
                 spotCount++;
             }
         },
-        sendOrder(){
+        sendOrder(){// Method to send the order
             this.order
         }
     },
-    computed: {
-        basketAmount() {
-            if (this.cart.length > 0) {
-                return true;
-            } else {
-                return false;
-            }
-        },
-        cartItemsCount() {
+    computed: {// Computed methods for the application
+        cartItemsCount() {// Computed method to specify if the basket is empty for the checkout button
             return this.cart.length || "";
         },
-        sortedLessons() {
+        sortedLessons() {// Computed method to sort the lessons based on the selected properties and order
             // Creates a copy of the lessons array to avoid changing the original list
             let lessonsToSort = this.lessons.slice();
 
@@ -118,7 +108,7 @@ let webstore = new Vue({
             // Returns the sorted array
             return lessonsToSort;
         },
-        lessonsSortedLocations() {
+        lessonsSortedLocations() {// Computed method to display the all the existent locations
             let totalLocations = [];
             this.lessons.forEach(lesson => {
                 if (!totalLocations.includes(lesson.location)) {
@@ -127,18 +117,20 @@ let webstore = new Vue({
             });
             return totalLocations.sort();
         },
-        trendingLessons() {
-            let trendingLessons = this.lessons
-                .filter(lesson => this.itemsLeft(lesson) > 0)
-                .sort((a, b) => this.itemsLeft(a) - this.itemsLeft(b))
-                .slice(0, 3);
+        trendingLessons() {// Computed method to display the trending lessons
+            let trendingLessons = this.lessons 
+                .filter(lesson => this.itemsLeft(lesson) > 0)// Filtering the lessons that have more than 0
+                .sort((a, b) => this.itemsLeft(a) - this.itemsLeft(b))// Sorting the lessons in ascending order
+                .slice(0, 3);// Display only the first three elements
             return trendingLessons;
         },
-        itemsInCart() {
-            let currItems = [];
+        itemsInCart() {// Computed method to display the items in the cart
+            let currItems = [];// Array for the 
             let existentItems = [];
             this.cart.forEach(item => {
+                // Checking if the item is already in the new array
                 if (!existentItems.includes(item)) {
+                    // New data for displaying the items in the cart
                     let itemData = {
                         "img": {
                             "location": "",
@@ -151,6 +143,7 @@ let webstore = new Vue({
                         "amount": 0
                     };
                     this.lessons.forEach(lesson => {
+                        //Loop through the lessons to use the data of the lesson in the item in the basket
                         if (item === lesson.id) {
                             itemData.img.location = lesson.img.location;
                             itemData.img.alt = lesson.img.alt;
@@ -162,12 +155,14 @@ let webstore = new Vue({
                             itemData.amount++;
                         }
                     });
+                    // Push the needed data in the array that will be displayed
                     currItems.push(itemData);
+                    // Record the item in the existing items to prevent repetition
                     existentItems.push(item);
                 } else {
                     currItems.forEach(itemIn => {
                         if(item === itemIn.id){
-                            itemIn.amount++;
+                            itemIn.amount++;// Increase the amount for repetitive items
                         }
                     })
                 }
