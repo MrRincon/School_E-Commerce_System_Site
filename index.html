@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- M00774667 -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=##, initial-scale=1.0">
     <title>SchoolFlex</title>
@@ -35,7 +36,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <!-- Button to display the checkout page if the cart is not empty-->
+                                <!-- Button to display the checkout page if the cart is not empty -->
                                 <button v-on:click="displayPage(1)" v-if="cartItemsCount"
                                     class="nav-link btn0 w-auto bg-rgb">
                                     {{cartItemsCount}}
@@ -86,6 +87,31 @@
                     </div>
                 </div>
             </section>
+            <!-- Trending section to display the trending lessons available -->
+            <section id="trending" class="bg-rgb">
+                <div class="container py-3">
+                    <div class="row m-auto text-center">
+                        <div class="col-lg-5 m-auto">
+                            <h1 class="text-white">Trending Lessons</h1>
+                            <h6 class="text-white">Increase your knowledge</h6>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- Vue.js for loop to display the trending lessons cards -->
+                        <div class="col-lg-4 text-center" v-for="trend in trendingLessons">
+                            <div class="card border-0 bg-light mb-2 curvyR cardText">
+                                <div class="card-body">
+                                    <img v-bind:src="trend.img.location" class="img-fluid hw-100px curvyR bg-rgb"
+                                        alt="trend.img.alt">
+                                    <p v-text="trend.subject"></p>
+                                    <p>£{{trend.price}}</p>
+                                    <p>{{itemsLeft(trend)}} Spaces Available</p>
+                                    <p v-text="trend.location"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         </div>
         <!-- Div for the checkout page -->
         <div v-else-if="displayPages === 1">
