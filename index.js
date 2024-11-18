@@ -12,7 +12,26 @@ let webstore = new Vue({
             options: ['Subject', 'Location', 'Price', 'Spaces']
         },
         cart: [],//Array to store items in the shopping cart [1001,1001,1001]
-        
+        order: {
+            firstName: '',
+            lastName: '',
+            phoneNumber: '',
+            address: '',
+            city: '',
+            zip: '',
+            states: {
+                state: '',
+                options: ['London', 'Manchester', 'Bristol', 'Cardiff']
+            },
+            method: 'Home',
+            gift: {
+                value: 'Do not send as gift',
+                options: {
+                    isGift: 'Send as gift',
+                    isNotGift: 'Do not send as gift'
+                }
+            }
+        }
     },
     methods: {
         displayPage(page) {
