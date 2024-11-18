@@ -155,7 +155,7 @@
                                         <p>£{{lesson.price}}</p>
                                         <p>{{itemsLeft(lesson)}} Spaces Available</p>
                                         <p v-text="lesson.location"></p>
-                                        <!-- Button to add the item to the cart -->
+                                        <!-- Button to add the item to the basket -->
                                         <button class="bg-dark btn0" v-on:click="addToCart(lesson)"
                                             v-if="canAddToCart(lesson)">Add to
                                             cart
@@ -175,7 +175,129 @@
         </div>
         <!-- Div for the checkout page -->
         <div v-else-if="displayPages === 1">
-            
+            <!-- Checkout section to get all the information for the order -->
+            <section id='Checkout' class="form-group">
+                <div class="container">
+                    <hr class="divider">
+                    <div class="row py-5">
+                        <div class="col text-center">
+                            <h1>Checkout Information</h1>
+                            <h6 style="color: rgb(30, 150, 146);">Almost there!</h6>
+                        </div>
+                    </div>
+                    <hr class="divider">
+                    <div class="row">
+                        <div class="col text-center">
+                            <h6 style="color: rgb(30, 150, 146);">Items in the cart</h6>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- Vue.js for loop to display all the lessons in the basket -->
+                        <div class="col-lg-2 text-center" v-for="item in itemsInCart">
+                            <div class="card border-0 bg-rgb mb-2 curvyR cardText text-white">
+                                <div class="card-body">
+                                    <img v-bind:src="item.img.location" class="img-fluid hw-100px curvyR"
+                                        alt="item.img.alt">
+                                    <p v-text="item.subject"></p>
+                                    <p>£{{item.price}}</p>
+                                    <p v-text="item.location"></p>
+                                    <p v-text="item.amount"></p>
+                                    <!-- Button to remove items from the basket -->
+                                    <button class="bg-dark btn0" v-on:click="removeItem(item.id)"><span
+                                            class="fa-solid fa-trash"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="divider">
+                    <!-- Form to add all the information for the order -->
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <strong style="color: rgb(30, 150, 146);">FIRST NAME:</strong>
+                                    <input v-model.trim="order.firstName" class="form-control" />
+                                </div>
+                                <div class="col-lg-4">
+                                    <strong style="color: rgb(30, 150, 146);">LAST NAME</strong>
+                                    <input v-model.trim="order.lastName" class="form-control" />
+                                </div>
+                                <div class="col-lg-4">
+                                    <strong style="color: rgb(30, 150, 146);">PHONE NUMBER</strong>
+                                    <input v-model.number="order.phoneNumber" type="number" class="form-control" />
+                                </div>
+                            </div>
+                            <hr class="divider">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <p>
+                                        <input type="radio" id="home" value="Home" v-model="order.method">
+                                        <strong for="home" style="color: rgb(30, 150, 146);">HOME</strong>
+                                        <strong> / </strong>
+                                        <input type="radio" id="business" value="Business" v-model="order.method">
+                                        <strong for="business" style="color: rgb(30, 150, 146);">BUSINESS</strong>
+                                    </p>
+                                    <p>
+                                        <strong style="color: rgb(30, 150, 146);">SHIP AS GIFT?</strong>
+                                        <input type="checkbox" id="gift" v-model="order.gift.value"
+                                            v-bind:true-value="order.gift.options.isGift"
+                                            v-bind:false-value="order.gift.options.isNotGift" />
+                                    </p>
+                                </div>
+                                <div class="col-lg-4">
+                                    <strong style="color: rgb(30, 150, 146);">ADDRESS:</strong>
+                                    <input v-model="order.address" class="form-control" />
+                                </div>
+                                <div class="col-lg-4">
+                                    <strong style="color: rgb(30, 150, 146);">CITY:</strong>
+                                    <input v-model="order.city" class="form-control" />
+                                </div>
+                                <div class="col-lg-4">
+                                    <strong style="color: rgb(30, 150, 146);">STATE:</strong>
+                                    <select v-model="order.states.state" class="form-control">
+                                        <option disabled value="">----</option>
+                                        <option v-for="state in order.states.options" v-bind:key="state"
+                                            v-bind:value="state">{{state}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-4">
+                                    <strong style="color: rgb(30, 150, 146);">ZIP/POST CODE:</strong>
+                                    <input v-model.number="order.zip" type="number" class="form-control"
+                                        style="text-decoration: none;" />
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Section to display all the information placed in the form -->
+                        <div class="col-lg-5">
+                            <h2 class="text-center"><strong>Order Information</strong></h2>
+                            <p><strong>First Name:</strong> {{order.firstName}}</p>
+                            <p><strong>Last Name:</strong> {{order.lastName}}</p>
+                            <p><strong>Phone Number:</strong> {{order.phoneNumber}}</p>
+                            <p><strong>Address:</strong> {{order.address}}</p>
+                            <p><strong>City:</strong> {{order.city}}</p>
+                            <p><strong>Zip:</strong> {{order.zip}}</p>
+                            <p><strong>State:</strong> {{order.states.state}}</p>
+                            <p><strong>Method:</strong> {{order.method}}</p>
+                            <p><strong>Gift:</strong> {{order.gift.value}}</p>
+                        </div>
+                    </div>
+                    <hr class="divider">
+                    <div class="row py-5 text-center">
+                        <!-- Button to place the order if basket is not empty -->
+                        <button v-on:click="sendOrder" class="btn0 w-auto bg-rgb">
+                            Place Order
+                            <span class="fas fa-cart-shopping"></span>
+                        </button>
+                        <!-- Disable button if the basket is empty -->
+                        <button disabled="disabled" class="btn0 w-auto bg-rgb" v-else>
+                            Place Order
+                            <span class="fas fa-cart-shopping"></span>
+                        </button>
+                    </div>
+                </div>
+            </section>
         </div>
         <!-- Footer section for extra information and links -->
         <section id="footer" class="py-5 bg-black">

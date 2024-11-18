@@ -64,6 +64,15 @@ let webstore = new Vue({
         cartItemsCount() {
             return this.cart.length || "";
         },
+        lessonsSortedLocations() {
+            let totalLocations = [];
+            this.lessons.forEach(lesson => {
+                if (!totalLocations.includes(lesson.location)) {
+                    totalLocations.push(lesson.location);
+                }
+            });
+            return totalLocations.sort();
+        },
         trendingLessons() {
             let trendingLessons = this.lessons
                 .filter(lesson => this.itemsLeft(lesson) > 0)
