@@ -64,6 +64,41 @@ let webstore = new Vue({
         cartItemsCount() {
             return this.cart.length || "";
         },
+        sortedLessons() {
+            // Creates a copy of the lessons array to avoid changing the original list
+            let lessonsToSort = this.lessons.slice();
+
+            // Sort the copied lessons array based on the selected property and order
+            lessonsToSort.sort((lessonA, lessonB) => {
+                let valueA, valueB;
+                // Using itemsLeft function if sorting by spaces available
+                if (this.sort.by === 'Spaces') {
+                    valueA = this.itemsLeft(lessonA);
+                    valueB = this.itemsLeft(lessonB);
+
+                } else {
+                    // Get the values of the selected property from both lessons
+                    valueA = lessonA[this.sort.by.toLowerCase()];
+                    valueB = lessonB[this.sort.by.toLowerCase()];
+                }
+                // Variable for the comparison result
+                let comparison;
+                // Compares alphabetically if the values are strings
+                if (typeof valueA === 'string' && typeof valueB === 'string') {
+                    // Simple comparison, return -1 if valueA is smaller, return 1 if larger, otherwise return 0
+                    comparison = valueA < valueB ? -1 : valueA > valueB ? 1 : 0;
+                } else {
+                    // Substracts to compare if the values are numbers
+                    comparison = valueA - valueB;
+                }
+
+                // Reverses the comparison result if the order is "Descending"
+                return this.sort.order === 'Ascending' ? comparison : -comparison;
+            });
+
+            // Returns the sorted array
+            return lessonsToSort;
+        },
         lessonsSortedLocations() {
             let totalLocations = [];
             this.lessons.forEach(lesson => {
