@@ -58,7 +58,39 @@
                 </div>
             </nav>
         </section>
-        
+        <!-- Div for the shop page -->
+        <div v-if="displayPages === 0">
+            <!-- Main section to display the introduction background -->
+            <section id="main">
+                <hr class="divider">
+                <div class="container py-5">
+                    <div class="row py-4">
+                        <div class="col-lg-7 pt-5 text-center">
+                            <h1 class="pt-5">Pick your lectures, Pick SchoolFlex!</h1>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Location section to display all the possible locations -->
+            <section id="locations" class="bg-black">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 col-md-10 col-12 m-auto">
+                            <div class="row text-center">
+                                <!-- Vue.js for loop to display the locations -->
+                                <div class="col-lg-4 col-md-6 col-12 my-1" v-for="location in lessonsSortedLocations">
+                                    <h3 v-text="location" class="locationText"></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <!-- Div for the checkout page -->
+        <div v-else-if="displayPages === 1">
+            
+        </div>
         <!-- Footer section for extra information and links -->
         <section id="footer" class="py-5 bg-black">
             <div class="container py-5">
