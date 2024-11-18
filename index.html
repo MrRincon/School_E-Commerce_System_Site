@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=##, initial-scale=1.0">
+    <title>SchoolFlex</title>
+    <!-- Import all the necessary libraries -->
+    <!-- Import Bootstrap, css and font-awesome icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <script src="https://unpkg.com/vue@2.7.8/dist/vue.js"></script>
+    <!-- Import javascript with Vue-->
+    <script src="index.js" defer></script>
+</head>
+<body>
+    <div id="App">
+        <!-- Header section for the navigation bar -->
+        <section id="header">
+            <nav class="navbar navbar-expand-lg">
+                <div class="container">
+                    <!-- Page logo & link for the main page -->
+                    <h1 class="navbar-brand" v-on:click="displayPage(0)">SchoolFlex</h1>
+                    <!-- Toggle button to expand the navigation bar on a small page -->
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <!-- Navigation bar -->
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <!-- Button to display the checkout page if the cart is not empty-->
+                                <button v-on:click="displayPage(1)" v-if="cartItemsCount"
+                                    class="nav-link btn0 w-auto bg-rgb">
+                                    {{cartItemsCount}}
+                                    <span class="fas fa-cart-shopping"></span>
+                                    Checkout
+                                </button>
+                                <!-- Disable button if the cart is empty -->
+                                <button disabled="disabled" class="nav-link btn0 w-auto bg-rgb" v-else>
+                                    <span class="fas fa-cart-shopping"></span>
+                                    Checkout
+                                </button>
+                            </li>
+                        </ul>
+                        <!-- Search bar  -->
+                        <form class="d-flex" role="search">
+                            <input class="px-2 search" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn0 bg-rgb" type="submit">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </nav>
+        </section>
+        
+        <!-- Footer section for extra information and links -->
+        <section id="footer" class="py-5 bg-black">
+            <div class="container py-5">
+                <div class="row">
+                    <div class="col-lg-9 m-auto text-center">
+                        <h1>Thanks for shopping with us!</h1>
+                    </div>
+                </div>
+                <div class="row pt-5">
+                    <div class="col-lg-11 m-auto">
+                        <div class="row">
+                            <div class="col-lg-4 py-3 text-center">
+                                <strong class="pb-3">CUSTOMER CARE</strong>
+                                <p>Complaints</p>
+                            </div>
+                            <div class="col-lg-4 py-3 text-center">
+                                <strong class="pb-3">ABOUT US</strong>
+                                <p>Contact us</p>
+                            </div>
+                            <div class="col-lg-4 py-3 text-center">
+                                <strong class="pb-3">SOCIAL MEDIA</strong>
+                                <p style="margin: 5px 0;">Twitter <span class="fab fa-twitter"></span></p>
+                                <p style="margin: 5px 0;">Facebook <span class="fab fa-facebook"></span></p>
+                                <p style="margin: 5px 0;">Instagram <span class="fab fa-instagram"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

@@ -1,0 +1,112 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* Header css */
+.navbar-brand {
+    font-size: 2rem;
+    color: black;
+    font-family: "Lobster", cursive;
+}
+
+.navbar-brand:hover {
+    color: black;
+}
+
+.nav-link {
+    margin-right: 10px;
+    margin-left: 10px;
+    color: black;
+    font-family: 'Rubik', sans-serif;
+}
+
+.nav-link:hover {
+    color: black;
+
+}
+
+.search {
+    height: 40px;
+    width: 90%;
+    border-radius: 20px;
+    outline: none;
+    font-family: 'Rubik', sans-serif;
+    border: 2px solid rgb(30, 150, 146);
+    margin-right: -35px;
+}
+
+.btn0 {
+    height: 40px;
+    width: 40%;
+    outline: none;
+    border: none;
+    color: white;
+    border-radius: 20px;
+    font-weight: 700;
+}
+
+.btn0:hover {
+    background-color: rgb(1, 71, 68);
+    transition: 0.5s;
+}
+
+/* Main section css */
+#main {
+    background: url(./images/background.jpg) no-repeat;
+    background-size: cover;
+    height: 100vh;
+    width: 100%;
+    background-position: 50% 50%;
+}
+
+#main h1 {
+    font-size: 4rem;
+    font-weight: 700;
+}
+
+/* Locations section css */
+.locationText{
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: "Notable", sans-serif;
+    color: rgba(255, 255, 255, 0.637);
+}
+
+.locationText:hover{
+    color: rgb(30, 150, 146);
+    transition: 0.5s;
+}
+
+.card:hover {
+    box-shadow: 0px 0px 30px -10px rgba(0, 0, 0, 0.85);
+    -webkit-box-shadow: 0px 0px 30px -10px rgba(0, 0, 0, 0.85);
+    -moz-box-shadow: 0px 0px 30px -10px rgba(0, 0, 0, 0.85);
+    transition: 0.2s;
+
+}
+
+/* Extra css */
+.hw-100px{
+    height: 100px;
+    width: 100px;
+}
+
+.curvyR{
+    border-radius: 5%;
+}
+
+.bg-rgb{
+    background-color: rgb(30, 150, 146);
+}
+
+.cardText{
+    font-size: 100%;
+    font-weight: 700;
+}
+
+.bg-black{
+    background-color: black;
+    color: white;
+}
