@@ -112,6 +112,66 @@
                         </div>
                     </div>
                 </div>
+            </section>
+            <!-- Store section to display all the lessons with sorting options -->
+            <section id="store">
+                <div class="container">
+                    <div class="row py-5">
+                        <div class="col-lg-8 m-auto text-center">
+                            <h1>Nurture Your Brain</h1>
+                            <h6 style="color: rgb(30, 150, 146);">Shop Some Lessons</h6>
+                        </div>
+                        <div class="col-lg-8 m-auto text-center py-5">
+                            <h6>Sort your search by:</h6>
+                            <div class="row">
+                                <div class="col-lg-10  text-center">
+                                    <!-- Select section for the type of sorting implemented to display the lessons -->
+                                    <select v-model="sort.by" class="btn0 text-center"
+                                        style="background-color: rgb(30, 150, 146);">
+                                        <option disabled value="">----</option>
+                                        <!-- Displaying the sorting options from the Vue obj -->
+                                        <option v-for="option in sort.options" v-bind:key="option"
+                                            v-bind:value="option">
+                                            {{option}}
+                                        </option>
+                                    </select>
+                                    <!-- Choices for the order of the sorted lessons -->
+                                    <input type="radio" id="ascending" value="Ascending" v-model="sort.order">
+                                    <label for="ascending">Ascending</label>
+                                    <input type="radio" id="descending" value="Descending" v-model="sort.order">
+                                    <label for="descending">Descending</label>
+                                </div>
+                            </div>
+                            <hr class="divider">
+                        </div>
+                        <div class="row">
+                            <!-- Vue.js for loop to display all the lessons sorted according to the choices made -->
+                            <div class="col-lg-3 text-center" v-for="lesson in sortedLessons">
+                                <div class="card border-0 bg-rgb mb-2 curvyR cardText text-white">
+                                    <div class="card-body">
+                                        <img v-bind:src="lesson.img.location" class="img-fluid hw-100px curvyR"
+                                            alt="lesson.img.alt">
+                                        <p v-text="lesson.subject"></p>
+                                        <p>£{{lesson.price}}</p>
+                                        <p>{{itemsLeft(lesson)}} Spaces Available</p>
+                                        <p v-text="lesson.location"></p>
+                                        <!-- Button to add the item to the cart -->
+                                        <button class="bg-dark btn0" v-on:click="addToCart(lesson)"
+                                            v-if="canAddToCart(lesson)">Add to
+                                            cart
+                                        </button>
+                                        <!-- Disable button if the item is sold out -->
+                                        <button class="btn0" disabled="disabled" v-else>Unavailable</button>
+                                        <span v-if="itemsLeft(lesson) === 0">No spaces left!</span>
+                                        <span v-else-if="itemsLeft(lesson) < 5"> Few spaces left!</span>
+                                        <span v-else>Buy now!</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
         <!-- Div for the checkout page -->
         <div v-else-if="displayPages === 1">
