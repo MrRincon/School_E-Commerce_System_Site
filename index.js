@@ -31,14 +31,15 @@ let webstore = new Vue({
                     isNotGift: 'Do not send as gift'
                 }
             }
-        }
+        },
+        feedback: ''
     },
     methods: {// Methods for the application
         displayPage(page) {// Method to display an specific page
             this.displayPages = page;
         },
         addToCart(lesson) {// Method to add an item to the cart
-            this.cart.push(lesson.id); 
+            this.cart.push(lesson.id);
         },
         canAddToCart(lesson) {// Method to confirm if item can be added to the cart
             return lesson.available > this.cartCount(lesson.id);
@@ -57,16 +58,16 @@ let webstore = new Vue({
         },
         removeItem(id) {// Method to remove an specific item from the cart
             let spotCount = 0;
-            for ( let item of this.cart){
-                if(item === id){
+            for (let item of this.cart) {
+                if (item === id) {
                     this.cart.splice(spotCount, 1);
                     break;
                 }
                 spotCount++;
             }
         },
-        sendOrder(){// Method to send the order
-            this.order
+        sendOrder() {// Method to send the order
+            // this.order
         }
     },
     computed: {// Computed methods for the application
@@ -118,7 +119,7 @@ let webstore = new Vue({
             return totalLocations.sort();
         },
         trendingLessons() {// Computed method to display the trending lessons
-            let trendingLessons = this.lessons 
+            let trendingLessons = this.lessons
                 .filter(lesson => this.itemsLeft(lesson) > 0)// Filtering the lessons that have more than 0
                 .sort((a, b) => this.itemsLeft(a) - this.itemsLeft(b))// Sorting the lessons in ascending order
                 .slice(0, 3);// Display only the first three elements
@@ -161,17 +162,51 @@ let webstore = new Vue({
                     existentItems.push(item);
                 } else {
                     currItems.forEach(itemIn => {
-                        if(item === itemIn.id){
+                        if (item === itemIn.id) {
                             itemIn.amount++;// Increase the amount for repetitive items
                         }
                     })
                 }
             });
             return currItems;
+        },
+        allowedToSubmit() {// Computed method to check the validation
+            if (this.order.firstName === '') {
+                this.feedback = 'First name is required.'
+            } else if (!/^[a-zA-Z ]+$/.test(this.order.firstName)) {
+                this.feedback = 'First name contains invalid characters.';
+            } else if (this.order.lastName === '') {
+                this.feedback = 'Last name is required.';
+            } else if (!/^[a-zA-Z ]+$/.test(this.order.lastName)) {
+                this.feedback = 'Last name contains invalid characters.';
+            } else if(this.order.phoneNumber === ''){
+                this.feedback = 'Phone number is required.';
+            } else if (isNaN(this.order.phoneNumber) || this.order.phoneNumber.toString().length < 10) {
+                this.feedback = 'Enter a valid phone number.';
+            } else if (this.order.address === '') {
+                this.feedback = 'Address is required.';
+            } else if (/^[a-zA-Z0-9, ]+[^a-zA-Z0-9 ]$/.test(this.order.address)) {
+                this.feedback = 'Address cannot end in a special character'
+            } else if (!/^[a-zA-Z0-9, ]+[a-zA-Z0-9 ]$/.test(this.order.address)) {
+                this.feedback = 'Address contains invalid characters.';
+            } else if (this.order.city === ''){
+                this.feedback = 'City is required.';
+            } else if (!/^[a-zA-Z ]+$/.test(this.order.city)) {
+                this.feedback = 'City contains invalid characters.';
+            } else if (this.order.states.state === ''){
+                this.feedback = 'Please select a State';
+            } else if (this.order.zip === '') {
+                this.feedback = 'Zip code is required.';
+            } else if (isNaN(this.order.zip) || this.order.zip.toString().length !== 5) {
+                this.feedback = 'Enter a valid 5-digit zip code.';
+            }  else {
+                this.feedback = '';
+            }
+            return (this.feedback === '');
         }
     },
     created: function () {
-        fetch("http://localhost:3000/collections/lessons").then(
+        fetch("http://localhost:3000/lessons").then(
             function (res) {
                 res.json().then(
                     function (json) {

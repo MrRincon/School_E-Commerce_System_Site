@@ -247,11 +247,11 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <strong style="color: rgb(30, 150, 146);">ADDRESS:</strong>
-                                    <input v-model="order.address" class="form-control" />
+                                    <input v-model.trim="order.address" class="form-control" />
                                 </div>
                                 <div class="col-lg-4">
                                     <strong style="color: rgb(30, 150, 146);">CITY:</strong>
-                                    <input v-model="order.city" class="form-control" />
+                                    <input v-model.trim="order.city" class="form-control" />
                                 </div>
                                 <div class="col-lg-4">
                                     <strong style="color: rgb(30, 150, 146);">STATE:</strong>
@@ -284,17 +284,20 @@
                         </div>
                     </div>
                     <hr class="divider">
-                    <div class="row py-5 text-center">
+                    <div class="row py-2 text-center">
                         <!-- Button to place the order if basket is not empty -->
-                        <button v-on:click="sendOrder" class="btn0 w-auto bg-rgb">
+                        <button v-on:click="sendOrder" class="nav-link btn0 w-auto bg-rgb m-auto" v-if="allowedToSubmit">
                             Place Order
                             <span class="fas fa-cart-shopping"></span>
                         </button>
                         <!-- Disable button if the basket is empty -->
-                        <button disabled="disabled" class="btn0 w-auto bg-rgb" v-else>
+                        <button disabled="disabled" class="nav-link btn0 w-auto bg-light m-auto" v-else>
                             Place Order
                             <span class="fas fa-cart-shopping"></span>
                         </button>
+                        <div id="feedback" class="text-center py-2">
+                            <p style="color: red;"><strong>{{feedback}}</strong></p>
+                        </div>
                     </div>
                 </div>
             </section>
