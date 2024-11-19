@@ -66,8 +66,35 @@ let webstore = new Vue({
                 spotCount++;
             }
         },
-        sendOrder() {// Method to send the order
-            // this.order
+        async sendOrder() {// Method to send the order
+            const newOrder = JSON.stringify({
+                id: '',
+                firstName: this.order.firstName,
+                lastName: this.order.lastName,
+                phoneNumber: this.order.phoneNumber,
+                address: this.order.address,
+                city: this.order.city,
+                zip: this.order.zip,
+                state: this.order.states.state,
+                method: this.order.method,
+                gift: this.order.gift.value,
+                purchasedLessonsID: this.cart
+            }); // Send the order as a string json format
+            try {
+                const response = await fetch(`http://localhost:3000/placeOrder`, {// Fetch the post method from the server and send the order data in the request
+                    method: 'POST',
+                    headers: { 'Content-type': 'application/json'},
+                    body: newOrder
+                });
+                const result = await response.json();// Identify the response from the fetch as a result
+                if(result.success){// If the result is successful, update the lessons collection
+
+                } else {
+                    
+                }
+            } catch (err) {// Catch error if the post method doesn't work
+                console.log(`Error fetching post method: ${err}`);
+            }
         }
     },
     computed: {// Computed methods for the application
