@@ -37,7 +37,7 @@
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
                                 <!-- Button to display the checkout page if the cart is not empty -->
-                                <button v-on:click="displayPage(1)" v-if="cartItemsCount"
+                                <button v-on:click="switchPages" v-if="cartItemsCount"
                                     class="nav-link btn0 w-auto bg-rgb">
                                     {{cartItemsCount}}
                                     <span class="fas fa-cart-shopping"></span>
@@ -286,7 +286,7 @@
                     <hr class="divider">
                     <div class="row py-2 text-center">
                         <!-- Button to place the order if basket is not empty -->
-                        <button v-on:click="sendOrder" class="nav-link btn0 w-auto bg-rgb m-auto" v-if="allowedToSubmit">
+                        <button v-on:click="sendOrder" class="nav-link btn0 w-auto bg-rgb m-auto" v-if="allowedToSubmit" data-bs-toggle="modal" data-bs-target="#notificationModal">
                             Place Order
                             <span class="fas fa-cart-shopping"></span>
                         </button>
@@ -297,6 +297,23 @@
                         </button>
                         <div id="feedback" class="text-center py-2">
                             <p style="color: red;"><strong>{{feedback}}</strong></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="notificationModalLabel">Congratulations!</h5>
+                            </div>
+                            <div class="modal-body text-center">
+                                <p id="modal-result"></p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn0 bg-rgb" v-on:click="reloadPage" data-bs-dismiss="modal">
+                                    Back to the store
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

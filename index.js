@@ -13,6 +13,7 @@ let webstore = new Vue({
         },
         cart: [],// Array to store items in the shopping cart
         order: {// Order information
+            id: '',
             firstName: '',
             lastName: '',
             phoneNumber: '',
@@ -35,6 +36,13 @@ let webstore = new Vue({
         feedback: ''
     },
     methods: {// Methods for the application
+        switchPages(){// Method to switch between the pages
+            if (this.displayPages === 0){
+                this.displayPages = 1;
+            } else {
+                this.displayPages = 0;
+            }
+        },
         displayPage(page) {// Method to display an specific page
             this.displayPages = page;
         },
@@ -66,9 +74,23 @@ let webstore = new Vue({
                 spotCount++;
             }
         },
+        restoreCheckout() {// Method to restore all the values to their initial settings
+            this.cart = [];
+            this.order.id = '';
+            this.order.firstName = '';
+            this.order.lastName = '';
+            this.order.phoneNumber = '';
+            this.order.address = '';
+            this.order.city = '';
+            this.order.zip = '';
+            this.order.states.state = '';
+            this.order.method = 'Home';
+            this.order.gift.value = 'Do not send as gift';
+        },
         async sendOrder() {// Method to send the order
-            const newOrder = JSON.stringify({
-                id: '',
+            const modalContent = document.getElementById('modal-result');// Get the modal content area to modify later
+            const newOrder = JSON.stringify({// Create the order and how it will be stored in the database
+                id: this.order.id,
                 firstName: this.order.firstName,
                 lastName: this.order.lastName,
                 phoneNumber: this.order.phoneNumber,
@@ -81,20 +103,42 @@ let webstore = new Vue({
                 purchasedLessonsID: this.cart
             }); // Send the order as a string json format
             try {
-                const response = await fetch(`http://localhost:3000/placeOrder`, {// Fetch the post method from the server and send the order data in the request
+                const postResponse = await fetch(`http://localhost:3000/placeOrder`, {// Fetch the post method from the server and send the order data in the request
                     method: 'POST',
-                    headers: { 'Content-type': 'application/json'},
+                    headers: { 'Content-type': 'application/json' },
                     body: newOrder
                 });
-                const result = await response.json();// Identify the response from the fetch as a result
-                if(result.success){// If the result is successful, update the lessons collection
-
-                } else {
-                    
+                const postResult = await postResponse.json();// Identify the response from the fetch as a result
+                if (postResult.success) {// If the result is successful, update the lessons collection
+                    this.order.id = postResult.order.id;
+                    let orderValue = postResult.order.id;// Safekeeping the order id to display it to the user
+                    modalContent.innerHTML = `Your order has been placed. this is your order id = <strong>${orderValue}</strong>`;
+                    const putResponse = await fetch(`http://localhost:3000/updateLessons`, {// Fetch the put method from the server and send the order data in the request
+                        method: 'PUT',
+                        headers: { 'Content-type': 'application/json' },
+                        body: newOrder
+                    });
+                    const putResult = await putResponse.json();// Identify the response from the fetch as a result
+                    if (putResult.success) {// If successful, restore the checkout
+                        this.restoreCheckout();
+                    }
                 }
             } catch (err) {// Catch error if the post method doesn't work
                 console.log(`Error fetching post method: ${err}`);
             }
+        },
+        reloadPage() {
+            webstore.lessons = [];
+            fetch("http://localhost:3000/lessons").then(
+                function (res) {
+                    res.json().then(
+                        function (json) {
+                            webstore.lessons = json;
+                        }
+                    )
+                }
+            );
+            this.displayPage(0);
         }
     },
     computed: {// Computed methods for the application
@@ -206,7 +250,7 @@ let webstore = new Vue({
                 this.feedback = 'Last name is required.';
             } else if (!/^[a-zA-Z ]+$/.test(this.order.lastName)) {
                 this.feedback = 'Last name contains invalid characters.';
-            } else if(this.order.phoneNumber === ''){
+            } else if (this.order.phoneNumber === '') {
                 this.feedback = 'Phone number is required.';
             } else if (isNaN(this.order.phoneNumber) || this.order.phoneNumber.toString().length < 10) {
                 this.feedback = 'Enter a valid phone number.';
@@ -216,21 +260,22 @@ let webstore = new Vue({
                 this.feedback = 'Address cannot end in a special character'
             } else if (!/^[a-zA-Z0-9, ]+[a-zA-Z0-9 ]$/.test(this.order.address)) {
                 this.feedback = 'Address contains invalid characters.';
-            } else if (this.order.city === ''){
+            } else if (this.order.city === '') {
                 this.feedback = 'City is required.';
             } else if (!/^[a-zA-Z ]+$/.test(this.order.city)) {
                 this.feedback = 'City contains invalid characters.';
-            } else if (this.order.states.state === ''){
+            } else if (this.order.states.state === '') {
                 this.feedback = 'Please select a State';
             } else if (this.order.zip === '') {
                 this.feedback = 'Zip code is required.';
             } else if (isNaN(this.order.zip) || this.order.zip.toString().length !== 5) {
                 this.feedback = 'Enter a valid 5-digit zip code.';
-            }  else {
+            } else {
                 this.feedback = '';
             }
             return (this.feedback === '');
         }
+
     },
     created: function () {
         fetch("http://localhost:3000/lessons").then(
