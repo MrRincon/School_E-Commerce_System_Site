@@ -103,7 +103,7 @@ let webstore = new Vue({
                 purchasedLessonsID: this.cart
             }); // Send the order as a string json format
             try {
-                const postResponse = await fetch(`http://localhost:3000/placeOrder`, {// Fetch the post method from the server and send the order data in the request
+                const postResponse = await fetch(`http://schoolflex.eu-west-2.elasticbeanstalk.com/placeOrder`, {// Fetch the post method from the server and send the order data in the request
                     method: 'POST',
                     headers: { 'Content-type': 'application/json' },
                     body: newOrder
@@ -113,7 +113,7 @@ let webstore = new Vue({
                     this.order.id = postResult.order.id;
                     let orderValue = postResult.order.id;// Safekeeping the order id to display it to the user
                     modalContent.innerHTML = `Your order has been placed. this is your order id = <strong>${orderValue}</strong>`;
-                    const putResponse = await fetch(`http://localhost:3000/updateLessons`, {// Fetch the put method from the server and send the order data in the request
+                    const putResponse = await fetch(`http://schoolflex.eu-west-2.elasticbeanstalk.com/updateLessons`, {// Fetch the put method from the server and send the order data in the request
                         method: 'PUT',
                         headers: { 'Content-type': 'application/json' },
                         body: newOrder
@@ -129,7 +129,7 @@ let webstore = new Vue({
         },
         reloadPage() {
             webstore.lessons = [];
-            fetch("http://localhost:3000/lessons").then(
+            fetch("http://schoolflex.eu-west-2.elasticbeanstalk.com/lessons").then(
                 function (res) {
                     res.json().then(
                         function (json) {
@@ -278,7 +278,7 @@ let webstore = new Vue({
 
     },
     created: function () {
-        fetch("http://localhost:3000/lessons").then(
+        fetch("http://schoolflex.eu-west-2.elasticbeanstalk.com/lessons").then(
             function (res) {
                 res.json().then(
                     function (json) {
