@@ -36,8 +36,8 @@ let webstore = new Vue({
         feedback: ''
     },
     methods: {// Methods for the application
-        switchPages(){// Method to switch between the pages
-            if (this.displayPages === 0){
+        switchPages() {// Method to switch between the pages
+            if (this.displayPages === 0) {
                 this.displayPages = 1;
             } else {
                 this.displayPages = 0;
@@ -277,15 +277,21 @@ let webstore = new Vue({
         }
 
     },
-    created: function () {
-        fetch("http://schoolflex-env.eba-xqcjhzrw.eu-west-2.elasticbeanstalk.com/lessons").then(
-            function (res) {
-                res.json().then(
-                    function (json) {
-                        webstore.lessons = json;
+    created:
+        function () {
+            try {
+                fetch("http://schoolflex-env.eba-xqcjhzrw.eu-west-2.elasticbeanstalk.com/lessons").then(
+                    function (res) {
+                        res.json().then(
+                            function (json) {
+                                webstore.lessons = json;
+                            }
+                        )
                     }
-                )
+                );
+            } catch (error) {
+                console.log(`Created fetching method error ${error}`)
             }
-        );
-    }
+
+        }
 });
