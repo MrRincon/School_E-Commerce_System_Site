@@ -51,16 +51,35 @@
                             </li>
                         </ul>
                         <!-- Search bar  -->
-                        <form class="d-flex" role="search">
-                            <input class="px-2 search" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn0 bg-rgb" type="submit">Search</button>
-                        </form>
+                        <!-- Button to open the search bar modal -->
+                        <button class="nav-link btn0 w-auto bg-rgb" data-bs-toggle="modal"
+                            data-bs-target="#searchModal">
+                            <span class="fa-solid fa-magnifying-glass"></span>
+                        </button>
                     </div>
                 </div>
             </nav>
         </section>
         <!-- Div for the shop page -->
         <div v-if="displayPages === 0">
+            <!-- Search bar div -->
+            <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel"
+                aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="d-flex align-items-center search-container col-md-6" role="search">
+                                <!-- Input field with a key-up function to search for matching lessons -->
+                                <input class="px-2 search w-100" type="search" placeholder="Search" v-on:keyup="searchBarQuery($event.target.value)" aria-label="Search">
+                            </div>
+                            <button type="button" class="btn0 bg-rgb col-md-2" data-bs-dismiss="modal"><span class="fa-solid fa-xmark"></span></button>
+                        </div>
+                        <!-- Div to display the elements found on the search -->
+                        <div id="searchModal-body" class="text-center">
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- Main section to display the introduction background -->
             <section id="main">
                 <hr class="divider">
