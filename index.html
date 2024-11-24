@@ -121,8 +121,8 @@
                         <div class="col-lg-4 text-center" v-for="trend in trendingLessons">
                             <div class="card border-0 bg-light mb-2 curvyR cardText">
                                 <div class="card-body">
-                                    <img v-bind:src="trend.img.location" class="img-fluid hw-100px curvyR bg-rgb"
-                                        alt="trend.img.alt">
+                                    <img v-bind:src="getFullImageUrl(trend.img.location)" class="img-fluid hw-100px curvyR bg-rgb"
+                                        v-bing:alt="trend.img.alt">
                                     <p v-text="trend.subject"></p>
                                     <p>£{{trend.price}}</p>
                                     <p>{{itemsLeft(trend)}} Spaces Available</p>
@@ -169,8 +169,8 @@
                             <div class="col-lg-3 text-center" v-for="lesson in sortedLessons">
                                 <div class="card border-0 bg-rgb mb-2 curvyR cardText text-white">
                                     <div class="card-body">
-                                        <img v-bind:src="lesson.img.location" class="img-fluid hw-100px curvyR"
-                                            alt="lesson.img.alt">
+                                        <img v-bind:src="getFullImageUrl(lesson.img.location)" class="img-fluid hw-100px curvyR"
+                                            v-bind:alt="lesson.img.alt">
                                         <p v-text="lesson.subject"></p>
                                         <p>£{{lesson.price}}</p>
                                         <p>{{itemsLeft(lesson)}} Spaces Available</p>
@@ -216,8 +216,8 @@
                         <div class="col-lg-2 text-center" v-for="item in itemsInCart">
                             <div class="card border-0 bg-rgb mb-2 curvyR cardText text-white">
                                 <div class="card-body">
-                                    <img v-bind:src="item.img.location" class="img-fluid hw-100px curvyR"
-                                        alt="item.img.alt">
+                                    <img v-bind:src="getFullImageUrl(item.img.location)" class="img-fluid hw-100px curvyR"
+                                        v-bind:alt="item.img.alt">
                                     <p v-text="item.subject"></p>
                                     <p>£{{item.price}}</p>
                                     <p v-text="item.location"></p>

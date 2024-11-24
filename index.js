@@ -36,8 +36,8 @@ let webstore = new Vue({
         feedback: ''
     },
     methods: {// Methods for the application
-        switchPages(){// Method to switch between the pages
-            if (this.displayPages === 0){
+        switchPages() {// Method to switch between the pages
+            if (this.displayPages === 0) {
                 this.displayPages = 1;
             } else {
                 this.displayPages = 0;
@@ -73,6 +73,10 @@ let webstore = new Vue({
                 }
                 spotCount++;
             }
+        },
+        getFullImageUrl(imagePath) {
+            const serverUrl = "https://school-e-commerce-system-server.onrender.com/";
+            return serverUrl + imagePath;
         },
         restoreCheckout() {// Method to restore all the values to their initial settings
             this.cart = [];
@@ -140,28 +144,28 @@ let webstore = new Vue({
             );
             this.displayPage(0);// Calling the function to display the main page agaim
         },
-        async searchBarQuery(newQuery){// Method to search for lessons that match the search bar query
+        async searchBarQuery(newQuery) {// Method to search for lessons that match the search bar query
             const modalContent = document.getElementById('searchModal-body');// Element targeted for the response
             try {// Try-Catch for any errors with the server 
-                if(!newQuery.trim){// Check up for the input field to see if is empty
+                if (!newQuery.trim) {// Check up for the input field to see if is empty
                     modalContent.innerHTML = `<p><strong>No results, please type to search.</strong></p>`;
                     return;
                 }
                 // Fetch the post method to the server to find the elements that match the query sent in the body as a request
                 const response = await fetch("https://school-e-commerce-system-server.onrender.com/search", {
                     method: 'POST',
-                    headers: { 'Content-type' : 'application/json'},
-                    body:  JSON.stringify({ searchTerm: newQuery })
+                    headers: { 'Content-type': 'application/json' },
+                    body: JSON.stringify({ searchTerm: newQuery })
                 })
                 const results = await response.json();
                 if (results.length > 0) {// Display all the lessons found in the targeted element that match the query
                     newString = ``;
                     console.log(results);
-                    for ( let result of results){// Loop through the results to display each lessons information
+                    for (let result of results) {// Loop through the results to display each lessons information
                         newString += `<p><strong>${result.subject} - ${result.location} - ${result.price}</strong></p><hr class='divider'>`;
                     }
                     modalContent.innerHTML = newString;
-                } else{// Error message if nothing is found
+                } else {// Error message if nothing is found
                     modalContent.innerHTML = `<p><strong>No results found for ${newQuery}.</strong></p>`;
                 }
             } catch (error) {
@@ -306,16 +310,16 @@ let webstore = new Vue({
         }
 
     },
-    created: 
-    function () {
-        fetch("https://school-e-commerce-system-server.onrender.com/lessons").then(
-            function (res) {
-                res.json().then(
-                    function (json) {
-                        webstore.lessons = json;
-                    }
-                )
-            }
-        ).catch();
-    }
+    created:
+        function () {
+            fetch("https://school-e-commerce-system-server.onrender.com/lessons").then(
+                function (res) {
+                    res.json().then(
+                        function (json) {
+                            webstore.lessons = json;
+                        }
+                    )
+                }
+            ).catch();
+        }
 });
