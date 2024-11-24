@@ -160,7 +160,6 @@ let webstore = new Vue({
                 const results = await response.json();
                 if (results.length > 0) {// Display all the lessons found in the targeted element that match the query
                     newString = ``;
-                    console.log(results);
                     for (let result of results) {// Loop through the results to display each lessons information
                         newString += `<p><strong>${result.subject} - ${result.location} - ${result.price}</strong></p><hr class='divider'>`;
                     }
