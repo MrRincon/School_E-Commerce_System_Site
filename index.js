@@ -74,7 +74,7 @@ let webstore = new Vue({
                 spotCount++;
             }
         },
-        getFullImageUrl(imagePath) {
+        getFullImageUrl(imagePath) {// Method to correct the URL to display the image from the server
             const serverUrl = "https://school-e-commerce-system-server.onrender.com/";
             return serverUrl + imagePath;
         },
@@ -161,7 +161,7 @@ let webstore = new Vue({
                 if (results.length > 0) {// Display all the lessons found in the targeted element that match the query
                     newString = ``;
                     for (let result of results) {// Loop through the results to display each lessons information
-                        newString += `<p><strong>${result.subject} - ${result.location} - ${result.price}</strong></p><hr class='divider'>`;
+                        newString += `<p><strong>${result.subject} - ${result.location} - £${result.price}</strong></p><hr class='divider'>`;
                     }
                     modalContent.innerHTML = newString;
                 } else {// Error message if nothing is found
