@@ -71,9 +71,9 @@
                         <div class="modal-header">
                             <div class="d-flex align-items-center search-container col-md-6" role="search">
                                 <!-- Input field with a key-up function to search for matching lessons -->
-                                <input class="px-2 search w-100" type="search" placeholder="Search" v-on:keyup="searchBarQuery($event.target.value)" aria-label="Search">
+                                <input id="searchInput" class="px-2 search w-100" type="search" placeholder="Search" v-on:keyup="searchBarQuery($event.target.value)" aria-label="Search">
                             </div>
-                            <button type="button" class="btn0 bg-rgb col-md-2" data-bs-dismiss="modal"><span class="fa-solid fa-xmark"></span></button>
+                            <button type="button" class="btn0 bg-rgb col-md-2" v-on:click="clearSearch()" data-bs-dismiss="modal"><span class="fa-solid fa-xmark"></span></button>
                         </div>
                         <!-- Div to display the elements found on the search -->
                         <div id="searchModal-body" class="text-center custom-scroll">

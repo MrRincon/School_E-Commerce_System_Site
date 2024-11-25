@@ -171,6 +171,10 @@ let webstore = new Vue({
                 console.error('Error fetching the search results', error);
                 modalContent.innerHTML = `<p><strong>An error occurred. Please try later</strong></p>`;
             }
+        },
+        clearSearch() {// Method to clear the input field when the modal is fully hidden
+            document.getElementById('searchInput').value = '';// Clear the input field
+            document.getElementById('searchModal-body').innerHTML = ``;// Clear modal body
         }
     },
     computed: {// Computed methods for the application
