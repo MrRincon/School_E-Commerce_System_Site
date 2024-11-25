@@ -122,7 +122,7 @@
                             <div class="card border-0 bg-light mb-2 curvyR cardText">
                                 <div class="card-body">
                                     <img v-bind:src="getFullImageUrl(trend.img.location)" class="img-fluid hw-100px curvyR bg-rgb"
-                                        v-bing:alt="trend.img.alt">
+                                        v-bind:alt="trend.img.alt">
                                     <p v-text="trend.subject"></p>
                                     <p>£{{trend.price}}</p>
                                     <p>{{itemsLeft(trend)}} Spaces Available</p>
