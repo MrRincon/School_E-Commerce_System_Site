@@ -53,7 +53,7 @@
                         <!-- Search bar  -->
                         <!-- Button to open the search bar modal -->
                         <button class="nav-link btn0 w-auto bg-rgb" data-bs-toggle="modal"
-                            data-bs-target="#searchModal">
+                            data-bs-target="#searchModal" v-on:click="clearSearch">
                             Search
                             <span class="fa-solid fa-magnifying-glass"></span>
                         </button>
@@ -73,7 +73,7 @@
                                 <!-- Input field with a key-up function to search for matching lessons -->
                                 <input id="searchInput" class="px-2 search w-100" type="search" placeholder="Search" v-on:keyup="searchBarQuery($event.target.value)" aria-label="Search">
                             </div>
-                            <button type="button" class="btn0 bg-rgb col-md-2" v-on:click="clearSearch" data-bs-dismiss="modal"><span class="fa-solid fa-xmark"></span></button>
+                            <button type="button" class="btn0 bg-rgb col-md-2" data-bs-dismiss="modal"><span class="fa-solid fa-xmark"></span></button>
                         </div>
                         <!-- Div to display the elements found on the search -->
                         <div id="searchModal-body" class="text-center custom-scroll">
