@@ -3,7 +3,7 @@
 let webstore = new Vue({
     el: '#App',
     data: {// Data information
-        sitename: "SchoolFlex",
+        sitename: "SlotScholars",
         displayPages: 0,
         lessons: [],// Array to store the lessons information
         sort: {
@@ -75,7 +75,7 @@ let webstore = new Vue({
             }
         },
         getFullImageUrl(imagePath) {// Method to correct the URL to display the image from the server
-            const serverUrl = "https://school-e-commerce-system-server.onrender.com/";
+            const serverUrl = "https://slotscholars-server.onrender.com/";
             return serverUrl + imagePath;
         },
         restoreCheckout() {// Method to restore all the values to their initial settings
@@ -107,7 +107,7 @@ let webstore = new Vue({
                 purchasedLessonsID: this.cart
             }); // Send the order as a string json format
             try {
-                const postResponse = await fetch(`https://school-e-commerce-system-server.onrender.com/placeOrder`, {// Fetch the post method from the server and send the order data in the request
+                const postResponse = await fetch(`https://slotscholars-server.onrender.com/placeOrder`, {// Fetch the post method from the server and send the order data in the request
                     method: 'POST',
                     headers: { 'Content-type': 'application/json' },
                     body: newOrder
@@ -117,7 +117,7 @@ let webstore = new Vue({
                     this.order.id = postResult.order.id;
                     let orderValue = postResult.order.id;// Safekeeping the order id to display it to the user
                     modalContent.innerHTML = `Your order has been placed. this is your order id = <strong>${orderValue}</strong>`;
-                    const putResponse = await fetch(`https://school-e-commerce-system-server.onrender.com/updateLessons`, {// Fetch the put method from the server and send the order data in the request
+                    const putResponse = await fetch(`https://slotscholars-server.onrender.com/updateLessons`, {// Fetch the put method from the server and send the order data in the request
                         method: 'PUT',
                         headers: { 'Content-type': 'application/json' },
                         body: newOrder
@@ -133,7 +133,7 @@ let webstore = new Vue({
         },
         reloadPage() {// Method to update the lessons when the page is reloaded after placing an order
             webstore.lessons = [];
-            fetch("https://school-e-commerce-system-server.onrender.com/lessons").then(
+            fetch("https://slotscholars-server.onrender.com/lessons").then(
                 function (res) {
                     res.json().then(
                         function (json) {
@@ -152,7 +152,7 @@ let webstore = new Vue({
                     return;
                 }
                 // Fetch the post method to the server to find the elements that match the query sent in the body as a request
-                const response = await fetch("https://school-e-commerce-system-server.onrender.com/search", {
+                const response = await fetch("https://slotscholars-server.onrender.com/search", {
                     method: 'POST',
                     headers: { 'Content-type': 'application/json' },
                     body: JSON.stringify({ searchTerm: newQuery })
@@ -315,7 +315,7 @@ let webstore = new Vue({
     },
     created:
         function () {
-            fetch("https://school-e-commerce-system-server.onrender.com/lessons").then(
+            fetch("https://slotscholars-server.onrender.com/lessons").then(
                 function (res) {
                     res.json().then(
                         function (json) {
